@@ -11,7 +11,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="static"
 
-RDEPEND="!static? ( dev-embedded/libhexfile )"
+RDEPEND="!static? ( dev-libs/libhexfile )"
 DEPEND="${RDEPEND}
 	"
 
