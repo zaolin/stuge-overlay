@@ -1,0 +1,11 @@
+--- oci.h.orig	2004-11-13 15:23:35.621353456 +0000
++++ oci.h	2004-11-13 15:24:16.205183776 +0000
+@@ -1987,6 +1987,8 @@
+ #include <ocixad.h>         /* definitions for eXternal tables Access Driver */
+ #endif
+ 
++#define OCI_NLS_CHARSET_ID	93
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
