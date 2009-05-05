@@ -1,0 +1,23 @@
+--- acpid-1.0.8/input_layer.c.orig	2009-03-26 04:56:06.000000000 +0100
++++ acpid-1.0.8/input_layer.c	2009-03-26 04:54:13.000000000 +0100
+@@ -53,9 +53,20 @@
+ /* use evtest.c or acpi_genl to find new events to add to this table */
+ static struct evtab_entry evtab[] = {
+ 	{{{0,0}, EV_KEY, KEY_POWER, 1}, "button/power PBTN 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_VENDOR, 1}, "button/vendor VNDR 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F1, 1}, "button/fnf1 FNF1 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F2, 1}, "button/fnf2 FNF2 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_COFFEE, 1}, "button/coffee CFEE 00000080 00000000"},
+ 	{{{0,0}, EV_KEY, KEY_SLEEP, 1}, "button/sleep SBTN 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_WLAN, 1}, "button/wlan WLAN 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F6, 1}, "button/fnf6 FNF6 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_SWITCHVIDEOMODE, 1}, "button/videomode VMOD 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F9, 1}, "button/undock UDCK 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F10, 1}, "button/fnf10 FN10 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_FN_F11, 1}, "button/fnf11 FN11 00000080 00000000"},
+ 	{{{0,0}, EV_KEY, KEY_SUSPEND, 1}, 
+  		"button/suspend SUSP 00000080 00000000"},
++	{{{0,0}, EV_KEY, KEY_ZOOM, 1}, "button/zoom ZOOM 00000080 00000000"},
+ 	{{{0,0}, EV_SW, SW_LID, 1}, "button/lid LID close"},
+ 	{{{0,0}, EV_SW, SW_LID, 0}, "button/lid LID open"}
+ };
