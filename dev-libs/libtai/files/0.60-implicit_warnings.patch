@@ -1,0 +1,59 @@
+--- check.c.orig	2008-02-15 04:23:17.000000000 +0100
++++ check.c	2008-02-15 04:24:39.000000000 +0100
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <time.h>
+ #include "tai.h"
+ #include "leapsecs.h"
+--- easter.c.orig	2008-02-15 04:23:24.000000000 +0100
++++ easter.c	2008-02-15 04:24:48.000000000 +0100
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include "caldate.h"
+ 
+ char *dayname[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" } ;
+--- leapsecs.c.orig	2008-02-15 04:23:14.000000000 +0100
++++ leapsecs.c	2008-02-15 04:24:29.000000000 +0100
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include "tai.h"
+ #include "leapsecs.h"
+ #include "caldate.h"
+--- leapsecs_read.c.orig	2008-02-15 04:23:09.000000000 +0100
++++ leapsecs_read.c	2008-02-15 04:24:08.000000000 +0100
+@@ -1,6 +1,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
++#include <stdlib.h>
+ #include <errno.h>
+ extern int errno;
+ #include "tai.h"
+--- nowutc.c.orig	2008-02-15 04:23:34.000000000 +0100
++++ nowutc.c	2008-02-15 04:25:00.000000000 +0100
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include "leapsecs.h"
+ #include "tai.h"
+ #include "taia.h"
+--- yearcal.c.orig	2008-02-15 04:23:29.000000000 +0100
++++ yearcal.c	2008-02-15 04:25:10.000000000 +0100
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include "caldate.h"
+ 
+ char *montab[] = {
+@@ -16,7 +17,7 @@
+ , "December"
+ } ;
+ 
+-void main(argc,argv)
++int main(argc,argv)
+ int argc;
+ char **argv;
+ {
