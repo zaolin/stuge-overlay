@@ -1,0 +1,24 @@
+diff -ru xup-0.0.2/XC3Sprog/detectchain.cpp xup-0.0.2-usr_share_xup_devlist.txt/XC3Sprog/detectchain.cpp
+--- xup-0.0.2/XC3Sprog/detectchain.cpp	2006-05-28 23:12:10.000000000 +0200
++++ xup-0.0.2-usr_share_xup_devlist.txt/XC3Sprog/detectchain.cpp	2008-10-07 04:25:35.000000000 +0200
+@@ -25,7 +25,7 @@
+ #include "devicedb.h"
+ 
+ #define PPDEV "/dev/parport0"
+-#define DEVICEDB "devlist.txt" 
++#define DEVICEDB "/usr/share/xup/devlist.txt" 
+ 
+ int main(int argc, char **args)
+ {
+diff -ru xup-0.0.2/XC3Sprog/xc3sprog.cpp xup-0.0.2-usr_share_xup_devlist.txt/XC3Sprog/xc3sprog.cpp
+--- xup-0.0.2/XC3Sprog/xc3sprog.cpp	2006-08-20 02:50:52.000000000 +0200
++++ xup-0.0.2-usr_share_xup_devlist.txt/XC3Sprog/xc3sprog.cpp	2008-10-07 04:25:40.000000000 +0200
+@@ -28,7 +28,7 @@
+ #include "progalgxc3s.h"
+ 
+ #define PPDEV "/dev/parport0"
+-#define DEVICEDB "devlist.txt"
++#define DEVICEDB "/usr/share/xup/devlist.txt"
+ 
+ void process(IOBase &io, BitFile &file, int chainpos);
+ void programXC3S(Jtag &jtag, IOBase &io, BitFile &file);
