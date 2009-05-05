@@ -1,0 +1,172 @@
+diff -ru xless-1.7.orig/callbacks.c xless-1.7/callbacks.c
+--- xless-1.7.orig/callbacks.c	1994-07-29 04:29:23.000000000 +0200
++++ xless-1.7/callbacks.c	2008-06-24 01:32:25.000000000 +0200
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <ctype.h>
+ #include <fcntl.h>
+ 
+@@ -445,7 +446,9 @@
+ {
+   WindowInfo *wi = (WindowInfo *)closure;
+   FILE *file;
+-  const char *printfile;
++  int tmpfd;
++  char fn[128];
++  const char *printfile=fn;
+   char *cmd;
+ #ifdef WIMPY_STDIO
+   char *line, *l;
+@@ -454,8 +457,9 @@
+   if (wi->file == NULL) {
+ 
+     /* create a temporary file */
+-    printfile = tmpnam(0);
+-    file = fopen(printfile, "w");
++    snprintf(fn,sizeof(fn),"/tmp/xless-XXXXXX");
++    tmpfd = mkstemp(fn);
++    file = fdopen(tmpfd, "w");
+ 
+ #ifdef WIMPY_STDIO
+     /* write stdin (line by line) to temporary file */
+diff -ru xless-1.7.orig/functions.c xless-1.7/functions.c
+--- xless-1.7.orig/functions.c	1994-06-02 22:45:40.000000000 +0200
++++ xless-1.7/functions.c	2008-06-24 01:26:27.000000000 +0200
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ 
+ #include <X11/X.h>
+ 
+diff -ru xless-1.7.orig/init.c xless-1.7/init.c
+--- xless-1.7.orig/init.c	1994-07-29 05:08:43.000000000 +0200
++++ xless-1.7/init.c	2008-06-24 01:23:18.000000000 +0200
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <unistd.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+diff -ru xless-1.7.orig/main.c xless-1.7/main.c
+--- xless-1.7.orig/main.c	1994-07-29 04:57:15.000000000 +0200
++++ xless-1.7/main.c	2008-06-24 01:26:12.000000000 +0200
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ 
+ #include <X11/X.h>
+ #include <X11/Xos.h>
+@@ -199,7 +200,7 @@
+   }
+ }
+ 
+-void
++int
+ main(argc, argv)
+ int argc;
+ char *argv[];
+@@ -319,4 +320,5 @@
+   }
+ 
+   XtAppMainLoop(context);
++  return 0;
+ }
+diff -ru xless-1.7.orig/regexp/regexp.c xless-1.7/regexp/regexp.c
+--- xless-1.7.orig/regexp/regexp.c	1991-05-08 03:14:54.000000000 +0200
++++ xless-1.7/regexp/regexp.c	2008-06-24 01:21:14.000000000 +0200
+@@ -789,7 +789,6 @@
+ register const char *string;
+ {
+ 	register char *s;
+-	extern char *strchr();
+ 
+ 	/* Be paranoid... */
+ 	if (prog == NULL || string == NULL) {
+@@ -888,7 +887,6 @@
+ {
+ 	register char *scan;	/* Current node. */
+ 	char *next;		/* Next node. */
+-	extern char *strchr();
+ 
+ 	scan = prog;
+ #ifdef DEBUG
+@@ -1164,7 +1162,6 @@
+ 	register char *s;
+ 	register char op = EXACTLY;	/* Arbitrary non-END op. */
+ 	register char *next;
+-	extern char *strchr();
+ 
+ 
+ 	s = r->program + 1;
+Only in xless-1.7/regexp: regexp.c.orig
+diff -ru xless-1.7.orig/regexp/regsub.c xless-1.7/regexp/regsub.c
+--- xless-1.7.orig/regexp/regsub.c	1994-06-17 00:29:08.000000000 +0200
++++ xless-1.7/regexp/regsub.c	2008-06-24 01:21:31.000000000 +0200
+@@ -43,9 +43,6 @@
+ 	register char c;
+ 	register int no;
+ 	register int len;
+-#ifndef AIXV3
+-	extern char *strncpy();
+-#endif
+ 
+ 	if (prog == NULL || source == NULL || dest == NULL) {
+ 		regerror("NULL parm to regsub");
+diff -ru xless-1.7.orig/util.c xless-1.7/util.c
+--- xless-1.7.orig/util.c	1994-06-17 00:33:55.000000000 +0200
++++ xless-1.7/util.c	2008-06-24 01:23:37.000000000 +0200
+@@ -23,6 +23,7 @@
+ 
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ 
+ #include <X11/X.h>
+ #include <X11/Xos.h>
+diff -ru xless-1.7.orig/window.c xless-1.7/window.c
+--- xless-1.7.orig/window.c	1994-07-29 04:36:07.000000000 +0200
++++ xless-1.7/window.c	2008-06-24 01:25:47.000000000 +0200
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <fcntl.h>
+ 
+ #include <X11/X.h>
+diff -ru xless-1.7.orig/xless.h xless-1.7/xless.h
+--- xless-1.7.orig/xless.h	1994-07-29 04:56:41.000000000 +0200
++++ xless-1.7/xless.h	2008-06-24 01:32:39.000000000 +0200
+@@ -39,12 +39,14 @@
+ #define XLESS_MAX_INPUT		256
+ 
+ /* handle differences between K&R and ANSI C */
++#ifndef __P
+ #if __STDC__
+ #define __P(a)	a
+ #else
+ #define __P(a)	()
+ #define const
+ #endif
++#endif
+ 
+ /*
+  * The default editor; make sure the file exists.
+@@ -234,7 +236,7 @@
+ void QuitFunction __P((void));
+ 
+ /* prototypes from main.c */
+-void main __P((int, char *[]));
++int main __P((int, char *[]));
+ extern XtAppContext context;
+ extern Widget toplevel;
+ extern Display *disp;
