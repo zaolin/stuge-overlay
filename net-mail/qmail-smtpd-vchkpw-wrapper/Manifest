@@ -1,0 +1,8 @@
+DIST qmail-smtpd-vchkpw-wrapper-1.tar.bz2 3522 RMD160 5f8be6cfcc6cf8125dcc5a6ceb9d58b4b6042fff SHA1 e1f6fae0a23420a2597fd26bb48ccbb57da80868 SHA256 5af522f971660f99b278c48bff646d01e46c748a10fc1eee04a6a64acf5c0cb3
+EBUILD qmail-smtpd-vchkpw-wrapper-1.ebuild 471 RMD160 d7a4555ad5a205d1a6ae2d297820fcbcb03bb6e0 SHA1 f7a61529642e109cc4ae6bef0ca503c0036ca05b SHA256 4ba9830b7bf3025ecc7f484be708d063bd2707104254f4347955dd6dba99839a
+MD5 ca01ec9a568b2509b6f3791c89ce091f qmail-smtpd-vchkpw-wrapper-1.ebuild 471
+RMD160 d7a4555ad5a205d1a6ae2d297820fcbcb03bb6e0 qmail-smtpd-vchkpw-wrapper-1.ebuild 471
+SHA256 4ba9830b7bf3025ecc7f484be708d063bd2707104254f4347955dd6dba99839a qmail-smtpd-vchkpw-wrapper-1.ebuild 471
+MD5 656cc5c76b02907a3520d8a5cb256db8 files/digest-qmail-smtpd-vchkpw-wrapper-1 283
+RMD160 062c5c78811911159119de17bf212efd4e3cade7 files/digest-qmail-smtpd-vchkpw-wrapper-1 283
+SHA256 113674ca1f551e5caf7d7c0aef4ab5b5fad1b83eb79efc08f959fff7a038888c files/digest-qmail-smtpd-vchkpw-wrapper-1 283
