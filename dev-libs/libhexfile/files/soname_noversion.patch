@@ -1,0 +1,11 @@
+--- libhexfile-0.0/Makefile.org	2003-02-15 05:17:51.000000000 +0100
++++ libhexfile-0.0/Makefile	2009-01-10 04:18:38.000000000 +0100
+@@ -6,7 +6,7 @@
+ LDFLAGS=
+ 
+ SONAME_NOVERSION=libhexfile.so
+-SONAME=libhexfile.so.0
++SONAME=libhexfile.so
+ LIBNAME=libhexfile.so.0.0.0
+ 
+ all: $(LIBNAME)
