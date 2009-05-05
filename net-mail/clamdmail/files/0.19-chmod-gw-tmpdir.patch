@@ -1,0 +1,10 @@
+--- src/files.c.orig	2006-10-04 19:44:19.000000000 +0200
++++ src/files.c	2006-11-17 10:45:07.000000000 +0100
+@@ -71,6 +71,7 @@
+ 		perror("mkdtemp Error");
+ 		cleanupAndExit(INIT_ERR);
+ 	}
++	chmod(path,S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP);
+ 	return path;
+ }
+ 
