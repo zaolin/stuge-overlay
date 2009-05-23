@@ -11,7 +11,7 @@ RESTRICT="nomirror"
 
 LICENSE="stuge.se_proprietary"
 SLOT="0"
-KEYWORDS="x86"
+KEYWORDS="amd64 x86"
 IUSE="debug"
 
 RDEPEND=">=dev-db/mysql-3.0"
