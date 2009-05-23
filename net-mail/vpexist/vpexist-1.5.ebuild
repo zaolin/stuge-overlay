@@ -14,7 +14,7 @@ KEYWORDS="x86"
 IUSE="mysql"
 
 RDEPEND="dev-db/cdb
-	use mysql && >=dev-db/mysql-3.0
+	mysql? ( >=dev-db/mysql-3.0 )
 	|| (
 		virtual/qmail
 		mail-mta/netqmail
@@ -25,8 +25,7 @@ DEPEND="${RDEPEND}
 	"
 
 src_compile() {
-	cd "${S}"
-	use mysql && emake SQL=mysql || emake
+	emake $(use mysql && echo SQL=mysql)
 }
 
 src_install() {
