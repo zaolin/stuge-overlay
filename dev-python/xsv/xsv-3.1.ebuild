@@ -11,7 +11,7 @@ DESCRIPTION="Python XML Schema Validator"
 SRC_URI="ftp://ftp.cogsci.ed.ac.uk/pub/XSV/${MY_P}.tar.gz"
 HOMEPAGE="http://www.ltg.ed.ac.uk/~ht/xsv-status.html"
 
-KEYWORDS="~ppc x86"
+KEYWORDS="~amd64 ~ppc x86"
 SLOT="0"
 LICENSE="GPL-2"
 IUSE=""

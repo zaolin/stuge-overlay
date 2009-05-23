@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/xmms2/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="curl ogg vorbis alsa sid python ruby flac gnome jack modplug samba speex sdl"
 
 S="${WORKDIR}/${MY_P}"

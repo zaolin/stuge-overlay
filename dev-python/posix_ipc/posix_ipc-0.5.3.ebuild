@@ -8,7 +8,7 @@ DESCRIPTION="POSIX IPC for Python - Semaphores, Shared Memory and Message Queues
 SRC_URI="http://semanchuk.com/philip/posix_ipc/${P}.tar.gz"
 HOMEPAGE="http://semanchuk.com/philip/posix_ipc/"
 
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="GPL-3"
 IUSE="examples"

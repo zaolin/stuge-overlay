@@ -10,7 +10,7 @@ SRC_URI="http://stuge.se/gentoo/${P}.tar.bz2 http://stuge.se/gentoo/phoenix-cvs-
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=dev-libs/phoenix-cvs-20060526"

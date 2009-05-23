@@ -9,7 +9,7 @@ SRC_URI=""
 
 LICENSE="LGPL-2"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 EGIT_REPO_URI="git://git.stuge.se/libusb.git"

@@ -10,7 +10,7 @@ SRC_URI="http://www.ibiblio.org/pub/Linux/utils/file/${P}.tgz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="x11-libs/libICE

@@ -10,7 +10,7 @@ SRC_URI="http://members.naspa.net/djs/software/hexcmp-0.2.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=""

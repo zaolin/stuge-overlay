@@ -10,7 +10,7 @@ SRC_URI="http://www.maxmind.com/download/geoip/api/mod_geoip2/mod_geoip2_1.1.8.t
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=dev-libs/geoip-1.3.4"

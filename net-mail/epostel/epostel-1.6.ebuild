@@ -10,7 +10,7 @@ SRC_URI="http://stuge.se/epostel/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86"
+KEYWORDS="~amd64 x86"
 IUSE=""
 
 RDEPEND=">=dev-db/mysql-3.0

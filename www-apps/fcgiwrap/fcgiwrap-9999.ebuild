@@ -11,7 +11,7 @@ RESTRICT=""
 
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 EGIT_REPO_URI="git://github.com/gnosek/fcgiwrap.git"

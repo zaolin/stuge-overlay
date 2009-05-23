@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/msetimon/${NAME}-perl-source-${MY_PV}.tar.gz"
 HOMEPAGE="http://msetimon.sourceforge.net/"
 
 S="${WORKDIR}/${PN}-perl-source-${MY_PV}"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="GPL-2"
 IUSE="X"
