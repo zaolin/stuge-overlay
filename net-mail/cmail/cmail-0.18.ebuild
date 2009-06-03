@@ -37,7 +37,7 @@ src_install() {
 	doexe queuecount
 
 	insinto /etc
-	insopts -m 750 -o root -g cmail
+	insopts -m 640 -o root -g cmail
 	doins cmail.conf
 
 	dodoc cmail.mysql
