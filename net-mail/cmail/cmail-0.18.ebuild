@@ -52,6 +52,6 @@ pkg_postinst() {
 }
 
 pkg_config() {
-	einfo Creating /etc/cron.d/cmail.sh
-	echo "5,15,25,35,45,55 * * * * cd ~cmail && ulimit -c unlimited && setuidgid cmail /usr/bin/cmail" > /etc/cron.d/cmail.sh
+	einfo Creating /etc/cron.d/cmail.cron
+	echo -e "PATH=/usr/bin\n5,15,25,35,45,55 * * * * cmail cd ~cmail && ulimit -c unlimited && exec cmail" > /etc/cron.d/cmail.cron
 }
