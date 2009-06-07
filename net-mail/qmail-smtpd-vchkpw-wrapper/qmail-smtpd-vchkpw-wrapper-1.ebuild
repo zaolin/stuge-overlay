@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 x86"
 IUSE="debug"
 
-RDEPEND=">=mail-mta/qmail-1.03
+RDEPEND="|| ( >=virtual/qmail-1.03 mail-mta/netqmail )
 	>=net-mail/vpopmail-5"
 DEPEND="${RDEPEND}"
 
