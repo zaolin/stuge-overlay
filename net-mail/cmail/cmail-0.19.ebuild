@@ -6,7 +6,7 @@ inherit eutils
 
 DESCRIPTION="Bulk email application"
 HOMEPAGE=""
-SRC_URI="${P}.tar.bz2"
+SRC_URI=""
 RESTRICT="nomirror"
 
 LICENSE="stuge.se_proprietary"
