@@ -13,8 +13,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 DEPEND="dev-python/setuptools"
 
-ESVN_REPO_URI="http://trac-hacks.org/svn/gitplugin/0.11"
-ESVN_PROJECT="gitplugin"
+src_unpack() {
+	ESVN_REPO_URI="http://trac-hacks.org/svn/gitplugin/0.11"
+	subversion_src_unpack
+}
 
 src_compile() {
 	:
