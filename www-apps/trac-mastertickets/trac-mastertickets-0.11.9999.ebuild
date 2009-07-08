@@ -9,10 +9,11 @@ HOMEPAGE="http://trac-hacks.org/wiki/MasterTicketsPlugin"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="graphviz"
+IUSE="graphviz gs"
 
 RDEPEND="|| ( >=www-apps/trac-0.11 <=www-apps/trac-0.12 )
-	graphviz? ( media-gfx/graphviz )"
+	graphviz? ( media-gfx/graphviz )
+	gs? ( virtual/ghostscript )"
 DEPEND="${RDEPEND}
 	dev-python/setuptools"
 
