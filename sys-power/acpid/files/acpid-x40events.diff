@@ -1,5 +1,5 @@
---- acpid-1.0.8/input_layer.c.orig	2009-03-26 04:56:06.000000000 +0100
-+++ acpid-1.0.8/input_layer.c	2009-03-26 04:54:13.000000000 +0100
+--- acpid-1.0.10-netlink3/input_layer.c.orig	2009-03-26 04:56:06.000000000 +0100
++++ acpid-1.0.10-netlink3/input_layer.c	2009-03-26 04:54:13.000000000 +0100
 @@ -53,9 +53,20 @@
  /* use evtest.c or acpi_genl to find new events to add to this table */
  static struct evtab_entry evtab[] = {
