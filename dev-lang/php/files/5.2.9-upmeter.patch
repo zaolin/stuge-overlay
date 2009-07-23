@@ -1,0 +1,264 @@
+-------------------------------------------------------------------- 
+   The Upload Progress Patch for PHP-5.2.9 License, version 1.0
+Copyright (c) 2004 - Koopman Consulting and Sales. All rights reserved.
+Copyright (c) 2009 Peter Stuge
+-------------------------------------------------------------------- 
+
+Redistribution and use in source and binary forms, with or without
+modification, is permitted provided that the following conditions
+are met:
+
+  1. Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+ 
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+ 
+THIS SOFTWARE PATCH IS PROVIDED BY KOOPMAN CONSULTING AND SALES ``AS IS'' AND 
+ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE KOOPMAN CONSULTING
+AND SALES DEVELOPMENT TEAM OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-------------------------------------------------------------------- 
+
+This software patch consists of original contributions made by
+Doru Theodor Petrescu <pdoru @at@ kappa @dot@ ro>
+( http://pdoru.from.ro/ ) and additional contributions by
+David Koopman <dave @at@ modphp @dot@ org>
+( http://www.koopmancs.com/ ) and additional contributions by
+Peter Stuge <peter @at@ stuge @dot@ se>
+( http://stuge.se/ )
+
+diff -ru php-5.2.9-orig/main/main.c php-5.2.9/main/main.c
+--- php-5.2.9-orig/main/main.c	Wed Dec 31 12:17:47 2008
++++ php-5.2.9/main/main.c	Wed Jul 22 00:06:28 2009
+@@ -434,6 +434,12 @@
+ 	STD_PHP_INI_ENTRY("upload_max_filesize",	"2M",		PHP_INI_SYSTEM|PHP_INI_PERDIR,		OnUpdateLong,			upload_max_filesize,	php_core_globals,	core_globals)
+ 	STD_PHP_INI_ENTRY("post_max_size",			"8M",		PHP_INI_SYSTEM|PHP_INI_PERDIR,		OnUpdateLong,			post_max_size,			sapi_globals_struct,sapi_globals)
+ 	STD_PHP_INI_ENTRY("upload_tmp_dir",			NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_tmp_dir,			php_core_globals,	core_globals)
++	STD_PHP_INI_BOOLEAN("upload_meter",			"0",		PHP_INI_SYSTEM,		OnUpdateBool,		upload_meter,			php_core_globals,	core_globals)
++	STD_PHP_INI_ENTRY("upload_meter_mysql_host",    	NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_meter_mysql_host,	php_core_globals,	core_globals)
++	STD_PHP_INI_ENTRY("upload_meter_mysql_user",    	NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_meter_mysql_user,	php_core_globals,	core_globals)
++	STD_PHP_INI_ENTRY("upload_meter_mysql_pass",    	NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_meter_mysql_pass,	php_core_globals,	core_globals)
++	STD_PHP_INI_ENTRY("upload_meter_mysql_db",      	NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_meter_mysql_db,		php_core_globals,	core_globals)
++	STD_PHP_INI_ENTRY("upload_meter_dir",           	NULL,		PHP_INI_SYSTEM,		OnUpdateStringUnempty,	upload_meter_dir,		php_core_globals,	core_globals)
+ 	STD_PHP_INI_ENTRY("max_input_nesting_level", "64",		PHP_INI_SYSTEM|PHP_INI_PERDIR,		OnUpdateLongGEZero,	max_input_nesting_level,			php_core_globals,	core_globals)
+ 
+ 	STD_PHP_INI_ENTRY("user_dir",				NULL,		PHP_INI_SYSTEM,		OnUpdateString,			user_dir,				php_core_globals,	core_globals)
+diff -ru php-5.2.9-orig/main/php_globals.h php-5.2.9/main/php_globals.h
+--- php-5.2.9-orig/main/php_globals.h	Wed Dec 31 12:17:47 2008
++++ php-5.2.9/main/php_globals.h	Tue May 19 20:35:33 2009
+@@ -146,6 +146,13 @@
+ 	zend_bool always_populate_raw_post_data;
+ 	zend_bool report_zend_debug;
+ 
++	zend_bool upload_meter;
++	char *upload_meter_dir;
++	char *upload_meter_mysql_host;
++	char *upload_meter_mysql_user;
++	char *upload_meter_mysql_pass;
++	char *upload_meter_mysql_db;
++
+ 	int last_error_type;
+ 	char *last_error_message;
+ 	char *last_error_file;
+diff -ru php-5.2.9-orig/main/rfc1867.c php-5.2.9/main/rfc1867.c
+--- php-5.2.9-orig/main/rfc1867.c	Wed Dec 31 12:17:47 2008
++++ php-5.2.9/main/rfc1867.c	Thu Jul 23 19:26:21 2009
+@@ -32,6 +32,8 @@
+ #include "php_globals.h"
+ #include "php_variables.h"
+ #include "rfc1867.h"
++#include <string.h>
++#include <mysql.h>
+ 
+ #define DEBUG_FILE_UPLOAD ZEND_DEBUG
+ 
+@@ -771,6 +773,98 @@
+ 	return out;
+ }
+ 
++typedef struct {
++	int time_start;
++	int time_last;
++	int speed_average;
++	int speed_last;
++	int bytes_uploaded;
++	int bytes_total;
++	int files_uploaded;
++	char progress[1024];
++	char host[128];
++	char user[32];
++	char pass[32];
++	char db[32];
++	char id[1024];
++} Xdata;
++
++static void update_progress_meter_file(Xdata *X)
++{
++	int eta,s;
++	MYSQL mysql;
++	MYSQL_RES *result;
++	MYSQL_ROW row;
++	const char *sql_update = "replace into uploadbar set id=md5('%s'),time_start=%d,time_last=%d,speed_average=%d,speed_last=%d,bytes_uploaded=%d,bytes_total=%d,files_uploaded=%d,eta=%d";
++	char query[2048];
++	FILE *F;
++
++	s = X->speed_average;
++	if (s < 1)
++		s = 1;
++
++	eta = (X->bytes_total - X->bytes_uploaded) / s;
++
++	if (strlen(X->progress) > 0 ) {
++		F = VCWD_FOPEN(X->progress, "wb");
++		if (F) {
++			fprintf(F, "time_start=%d\ntime_last=%d\nspeed_average=%d\nspeed_last=%d\nbytes_uploaded=%d\nbytes_total=%d\nfiles_uploaded=%d\neta=%d\n", X->time_start, X->time_last, X->speed_average, X->speed_last, X->bytes_uploaded, X->bytes_total, X->files_uploaded, eta);
++			fclose(F);
++		}
++	}
++	if (strlen(X->host) > 0) {
++		if (mysql_init(&mysql)) {
++			if (mysql_real_connect(&mysql, X->host, X->user, X->pass, X->db, 0, NULL, 0)) {
++				snprintf(query, sizeof(query), sql_update, X->id, X->time_start, X->time_last, X->speed_average, X->speed_last, X->bytes_uploaded, X->bytes_total, X->files_uploaded, eta);
++				mysql_query(&mysql, query);
++			}
++			mysql_close(&mysql);
++		}
++	}
++	sapi_module.sapi_error(E_NOTICE, "meter: read %d of %d", SG(read_post_bytes), SG(request_info).content_length);
++}
++
++static void update_progress_meter(Xdata *X, int read, int total)
++{
++	int d,dt,dtx;
++	int bu;
++	int sp;
++
++	if (!X->time_start) {
++		X->time_start = X->time_last = time(NULL);
++		X->bytes_total = total;
++		X->bytes_uploaded = read;
++		X->speed_average = X->speed_last = X->bytes_uploaded;
++		update_progress_meter_file(X);
++		return;
++	}
++
++	dt = time(NULL) - X->time_last;
++	d = read - X->bytes_uploaded;
++
++	if (dt < 1) {
++		if (read < total) /* avoid divide by zero */
++			return;
++		if (d < 1)
++			return;
++		dt = 1;
++	}
++
++	sp = d/dt;
++
++	X->bytes_uploaded = read;
++	X->time_last = time(NULL);
++
++	dtx = X->time_last - X->time_start;
++
++	if (dtx < 1)
++		dtx = 1;
++
++	X->speed_average = X->bytes_uploaded / dtx;
++	X->speed_last = sp;
++	update_progress_meter_file(X);
++}
++
+ 
+ /*
+  * The combined READER/HANDLER
+@@ -794,12 +888,16 @@
+ 	zend_llist header;
+ 	void *event_extra_data = NULL;
+ 	int llen = 0;
++	Xdata X;
++	int progress_meter = 0;
+ 
+ 	if (SG(request_info).content_length > SG(post_max_size)) {
+ 		sapi_module.sapi_error(E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes", SG(request_info).content_length, SG(post_max_size));
+ 		return;
+ 	}
+ 
++	bzero(&X, sizeof(X));
++
+ 	/* Get the boundary */
+ 	boundary = strstr(content_type_dup, "boundary");
+ 	if (!boundary || !(boundary=strchr(boundary, '='))) {
+@@ -871,6 +969,7 @@
+ 		zend_llist_clean(&header);
+ 
+ 		if (!multipart_buffer_headers(mbuff, &header TSRMLS_CC)) {
++			if (progress_meter) update_progress_meter( &X, SG(read_post_bytes), SG(request_info).content_length );
+ 			goto fileupload_done;
+ 		}
+ 
+@@ -964,6 +1063,22 @@
+ 					max_file_size = atol(value);
+ 				}
+ 
++				if (!strcmp(param, "UPLOAD_METER_ID")) {
++					size_t oklen = MIN(strspn(value, "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._,@-%"), 64);
++					if (PG(upload_meter) && PG(upload_meter_dir)) {
++						progress_meter = 1;
++						snprintf(X.progress, sizeof(X.progress), "%s/%*s", PG(upload_meter_dir), oklen, value);
++					}
++					if (PG(upload_meter) && PG(upload_meter_mysql_host) && PG(upload_meter_mysql_user) && PG(upload_meter_mysql_pass) && PG(upload_meter_mysql_db)) {
++						progress_meter = 1;
++						snprintf(X.host, sizeof(X.host), "%s", PG(upload_meter_mysql_host));
++						snprintf(X.user, sizeof(X.user), "%s", PG(upload_meter_mysql_user));
++						snprintf(X.pass, sizeof(X.pass), "%s", PG(upload_meter_mysql_pass));
++						snprintf(X.db, sizeof(X.db), "%s", PG(upload_meter_mysql_db));
++						snprintf(X.id, sizeof(X.id), "%*s", oklen, value);
++					}
++				}
++
+ 				efree(param);
+ 				efree(value);
+ 				continue;
+@@ -1013,6 +1128,10 @@
+ 
+ 			total_bytes = cancel_upload = 0;
+ 
++ 			if (progress_meter)
++ 				update_progress_meter(&X, SG(read_post_bytes), SG(request_info).content_length);
++ 			X.files_uploaded++;
++
+ 			if (!skip_upload) {
+ 				/* Handle file */
+ 				fd = php_open_temporary_fd_ex(PG(upload_tmp_dir), "php", &temp_filename, 1 TSRMLS_CC);
+@@ -1105,6 +1224,9 @@
+ 						total_bytes += wlen;
+ 					}
+ 					
++					if (progress_meter)
++						update_progress_meter(&X, SG(read_post_bytes), SG(request_info).content_length);
++
+ 					offset += wlen;
+ 				} 
+ 			}
+@@ -1353,6 +1475,9 @@
+ 		event_end.post_bytes_processed = SG(read_post_bytes);
+ 		php_rfc1867_callback(MULTIPART_EVENT_END, &event_end, &event_extra_data TSRMLS_CC);
+ 	}
++
++	if (progress_meter)
++		update_progress_meter(&X, SG(read_post_bytes), SG(request_info).content_length);
+ 	
+ 	SAFE_RETURN;
+ }
