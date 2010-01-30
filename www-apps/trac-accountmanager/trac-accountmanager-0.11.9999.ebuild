@@ -17,7 +17,6 @@ DEPEND="${RDEPEND}
 
 src_unpack() {
 	ESVN_REPO_URI="http://trac-hacks.org/svn/accountmanagerplugin/0.11"
-	ESVN_PATCHES="replaceMessageWrapper-with-genshi-markup-against-0.11-branch.patch"
 	subversion_src_unpack
 }
 
