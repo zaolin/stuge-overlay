@@ -1,17 +1,19 @@
-# Copyright 2009 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
+# Copyright 2010 Peter Stuge
 # $Header$
 
 inherit subversion distutils
 
-DESCRIPTION="Trac 0.10/0.11 plugin for using Git repositories."
-HOMEPAGE="http://trac-hacks.org/wiki/GitPlugin"
+DESCRIPTION="Trac 0.11 plugin for Git repositories"
+HOMEPAGE="http://trac-hacks.org/wiki/TracGitPlugin"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-DEPEND="dev-python/setuptools"
+
+RDEPEND="|| ( >=www-apps/trac-0.11 <=www-apps/trac-0.12 )"
+DEPEND="${RDEPEND}
+	dev-python/setuptools"
 
 src_unpack() {
 	ESVN_REPO_URI="http://trac-hacks.org/svn/gitplugin/0.11"
