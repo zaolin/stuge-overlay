@@ -107,9 +107,10 @@ pkg_setup() {
 
 	if use upmeter ; then
 		use mysql || \
-			die "Please rebuild with on USE=mysql to enable upmeter"
+			die "USE=upmeter requires USE=mysql, please set it and rebuild PHP"
 	fi
 
+	depend.apache_pkg_setup
 	php5_2-sapi_pkg_setup
 }
 
@@ -535,7 +536,7 @@ pkg_postinst() {
 }
 
 src_test() {
-	vecho ">>> Test phase [test]: ${CATEGORY}/${PF}"
+	echo ">>> Test phase [test]: ${CATEGORY}/${PF}"
 	if [[ ! -x "${S}"/php-cli ]]; then
 		ewarn "Running the php test suite requires USE=cli"
 		return
