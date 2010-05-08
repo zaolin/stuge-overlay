@@ -1,0 +1,12 @@
+# Xilinx USB Cable firmware
+
+ACTION!="add", GOTO="xusbdfwu_rules_end"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0007", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusbdfwu.hex -D $tempnode"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0009", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusb_xup.hex -D $tempnode"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000d", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusb_emb.hex -D $tempnode"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000f", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusb_xlp.hex -D $tempnode"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0013", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusb_xp2.hex -D $tempnode"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0015", RUN+="/sbin/fxload -t fx2 -I /usr/share/xusb_xse.hex -D $tempnode"
+
+LABEL="xusbdfwu_rules_end"
