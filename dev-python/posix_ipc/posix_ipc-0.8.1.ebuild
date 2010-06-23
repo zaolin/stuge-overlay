@@ -17,7 +17,6 @@ DEPEND=">=dev-lang/python-2.4"
 
 src_install() {
 	distutils_src_install
-	distutils_python_version
 
 	insinto /usr/share/doc/${PF}
 	doins README ReadMe.html
