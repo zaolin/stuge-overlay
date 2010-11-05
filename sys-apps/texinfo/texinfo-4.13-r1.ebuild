@@ -19,7 +19,8 @@ RDEPEND="!=app-text/tetex-2*
 	nls? ( virtual/libintl )"
 DEPEND="${RDEPEND}
 	|| ( app-arch/xz-utils app-arch/lzma-utils )
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+	sys-apps/help2man"
 
 src_unpack() {
 	unpack "${A}"
