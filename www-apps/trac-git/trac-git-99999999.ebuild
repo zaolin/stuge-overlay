@@ -11,7 +11,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-EGIT_REPO_URI="http://github.com/hvr/gitplugin.git"
+EGIT_REPO_URI="https://github.com/hvr/trac-git-plugin.git"
 
 RDEPEND="|| ( >=www-apps/trac-0.12_beta1 <www-apps/trac-0.13 )"
 DEPEND="${RDEPEND}
