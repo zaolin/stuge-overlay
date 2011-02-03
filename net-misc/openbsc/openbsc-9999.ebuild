@@ -12,7 +12,7 @@ SLOT="1"
 KEYWORDS="~amd64 ~x86"
 IUSE="ggsn"
 
-EGIT_REPO_URI="git://openbsc.gnumonks.org/openbsc.git"
+EGIT_REPO_URI="git://git.osmocom.org/openbsc.git"
 EGIT_BOOTSTRAP="cd openbsc && eautoreconf"
 
 RDEPEND=">=dev-libs/libosmocore-0.1.27
