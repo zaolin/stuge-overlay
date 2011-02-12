@@ -4,6 +4,7 @@
 
 inherit java-pkg-2 java-pkg-simple
 
+EAPI="1"
 DESCRIPTION="A java library for transforming objects to and from JSON"
 HOMEPAGE="http://json-lib.sourceforge.net/"
 SRC_URI="mirror://sourceforge/json-lib/${P}-jdk15-sources.jar"
