@@ -4,6 +4,7 @@
 
 inherit java-pkg-2 java-pkg-simple
 
+EAPI="1"
 DESCRIPTION="Simple Java library for transforming an Object to another Object"
 HOMEPAGE="http://ezmorph.sourceforge.net/"
 SRC_URI="mirror://sourceforge/ezmorph/${P}-sources.jar"
