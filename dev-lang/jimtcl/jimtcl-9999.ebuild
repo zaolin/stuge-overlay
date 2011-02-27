@@ -31,7 +31,7 @@ src_install() {
 	dolib.so libjim.so || die "dolib failed"
 	insinto /usr/include
 	doins jim.h jimautoconf.h jim-subcmd.h jim-nvp.h jim-signal.h
-	doins jim-win32compat.h jim-eventloop.h
+	doins jim-win32compat.h jim-eventloop.h jim-config.h
 	dodoc AUTHORS README TODO || die "dodoc failed"
 	dohtml Tcl.html || die "dohtml failed"
 }
