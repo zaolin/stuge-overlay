@@ -40,7 +40,7 @@ src_unpack() {
 	if [[ ${PV} == "9999" ]] ; then
 		git_src_unpack
 		cd "${S}"
-		eautoreconf
+		AT_NO_RECURSIVE=yes eautoreconf
 	else
 		unpack ${A}
 	fi
@@ -49,6 +49,7 @@ src_unpack() {
 src_compile() {
 	if [[ ${PV} == "9999" ]] ; then
 		myconf="${myconf} --enable-maintainer-mode"
+		myconf="${myconf} --disable-internal-jimtcl"
 	fi
 
 	econf \
