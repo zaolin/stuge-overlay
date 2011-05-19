@@ -1,4 +1,4 @@
-# Copyright 2010 Gentoo Foundation
+# Copyright 2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
@@ -6,7 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A JavaScript compressor"
 HOMEPAGE="http://developer.yahoo.com/yui/compressor/"
-SRC_URI="http://yuilibrary.com/downloads/${PN}/${P}.zip"
+SRC_URI="http://yui.zenfs.com/releases/${PN}/${P}.zip"
 
 LICENSE="BSD"
 SLOT="0"
@@ -24,4 +24,5 @@ EANT_BUILD_TARGET="clean build.jar"
 
 src_install() {
 	java-pkg_dojar "build/${P}.jar"
+	java-pkg_dolauncher
 }
