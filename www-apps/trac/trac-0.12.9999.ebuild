@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit eutils distutils webapp
 
-ESVN_REPO_URI="http://svn.edgewall.org/repos/trac/trunk"
+ESVN_REPO_URI="http://svn.edgewall.org/repos/trac/branches/0.12-stable"
 inherit subversion
 SRC_URI=""
 
