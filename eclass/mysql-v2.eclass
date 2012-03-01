@@ -140,7 +140,7 @@ if [ -z "${SERVER_URI}" ]; then
 	[ -z "${MY_PV}" ] && MY_PV="${PV//_/-}"
 	if [ "${PN}" == "mariadb" ]; then
 		MARIA_FULL_PV="$(replace_version_separator 3 '-' ${PV})"
-		MARIA_FULL_P="${PN}-${MARIA_FULL_PV}"
+		MARIA_FULL_P="${PN}-${MARIA_FULL_PV}${MARIA_P_SUFFIX}"
 		SERVER_URI="
 		http://ftp.osuosl.org/pub/mariadb/${MARIA_FULL_P}/kvm-tarbake-jaunty-x86/${MARIA_FULL_P}.tar.gz
 		http://ftp.rediris.es/mirror/MariaDB/${MARIA_FULL_P}/kvm-tarbake-jaunty-x86/${MARIA_FULL_P}.tar.gz
