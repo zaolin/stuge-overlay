@@ -37,6 +37,6 @@ src_install() {
 
 	if use examples ; then
 		docinto examples
-		dodoc examples/*
+		dodoc -r examples/*
 	fi
 }
