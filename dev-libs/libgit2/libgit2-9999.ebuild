@@ -8,7 +8,7 @@ inherit git-2 cmake-utils multilib
 DESCRIPTION="A linkable library for Git"
 HOMEPAGE="http://libgit2.github.com/"
 
-EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
+EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
