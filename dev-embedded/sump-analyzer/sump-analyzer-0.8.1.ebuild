@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-EAPI="1"
+EAPI="4"
 inherit java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Logic Analyzer Client from sump.org"
