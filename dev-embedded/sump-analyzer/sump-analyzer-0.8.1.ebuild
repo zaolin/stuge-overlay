@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-inherit java-pkg-2
+inherit java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Logic Analyzer Client from sump.org"
 HOMEPAGE="http://sump.org/projects/analyzer/"
@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-COMMON_DEP="dev-java/rxtx"
+COMMON_DEP="dev-java/rxtx:2"
 
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
@@ -32,10 +32,10 @@ src_compile() {
 	mkdir -p target/classes/org/sump/analyzer/icons || die "Could not create target directory"
 	cp Manifest.txt target/classes/META-INF/MANIFEST.MF
 	cp org/sump/analyzer/icons/*.png target/classes/org/sump/analyzer/icons/
-	java-pkg-2_src_compile
+	java-pkg-simple_src_compile
 }
 
 src_install() {
-	java-pkg_dojar target/${PN}.jar
+	java-pkg-simple_src_install
 	java-pkg_dolauncher
 }
