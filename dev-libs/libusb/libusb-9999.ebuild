@@ -1,8 +1,8 @@
 # Copyright 2009 Gentoo Foundation
 
+EAPI="1"
 inherit git
 
-EAPI="1"
 DESCRIPTION="Userspace access to USB devices"
 HOMEPAGE="http://libusb.sourceforge.net/"
 SRC_URI=""
