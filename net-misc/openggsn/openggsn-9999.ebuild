@@ -1,8 +1,8 @@
 # Copyright 2011 Gentoo Foundation
+EAPI="2"
 
 inherit git autotools
 
-EAPI="2"
 DESCRIPTION="An Gateway GPRS Support Node and SGSN emulator"
 HOMEPAGE="http://sourceforge.net/projects/ggsn/"
 SRC_URI=""
