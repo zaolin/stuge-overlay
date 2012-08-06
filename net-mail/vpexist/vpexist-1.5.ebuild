@@ -14,7 +14,10 @@ KEYWORDS="~amd64 x86"
 IUSE="mysql qmail-spp"
 
 RDEPEND="dev-db/cdb
-	mysql? ( >=dev-db/mysql-3.0 )
+	mysql? ( || (
+		virtual/mysql
+		dev-db/mysql
+	) )
 	|| (
 		virtual/qmail
 		mail-mta/netqmail
