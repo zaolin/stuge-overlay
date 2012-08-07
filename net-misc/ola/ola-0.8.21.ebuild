@@ -14,12 +14,12 @@ SRC_URI="http://open-lighting.googlecode.com/files/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="python webserver examples"
+KEYWORDS="~amd64 ~arm ~x86"
+IUSE="examples httpd python"
 
 DEPEND="	dev-libs/protobuf[python]
 		dev-util/cppunit
-		webserver? ( net-libs/libmicrohttpd )"
+		httpd? ( net-libs/libmicrohttpd )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
@@ -34,9 +34,9 @@ src_prepare() {
 src_configure() {
 	econf	--prefix=/usr \
 		--disable-fatal-warnings \
-		$(use_enable python python-libs) \
-		$(use_enable webserver http) \
-		$(use_enable examples)
+		$(use_enable examples) \
+		$(use_enable httpd http) \
+		$(use_enable python python-libs)
 
 		append-ldflags $(no-as-needed)
 }
