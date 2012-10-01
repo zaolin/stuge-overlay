@@ -1,0 +1,12 @@
+diff -ru netqmail-1.06.orig/dns.c netqmail-1.06/dns.c
+--- netqmail-1.06.orig/dns.c	2012-10-01 22:40:35.880121167 +0200
++++ netqmail-1.06/dns.c	2012-10-01 22:40:19.083621198 +0200
+@@ -19,7 +19,7 @@
+ static unsigned short getshort(c) unsigned char *c;
+ { unsigned short u; u = c[0]; return (u << 8) + c[1]; }
+ 
+-static union { HEADER hdr; unsigned char buf[PACKETSZ]; } response;
++static union { HEADER hdr; unsigned char buf[32768]; } response;
+ static int responselen;
+ static unsigned char *responseend;
+ static unsigned char *responsepos;
