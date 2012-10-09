@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/www-apps/trac/trac-0.11.7.ebuild,v 1.2 2010/04/16 15:26:38 ranger Exp $
 
-EAPI="2"
+EAPI="3"
 
 inherit eutils distutils webapp
 
