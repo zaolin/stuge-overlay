@@ -1,0 +1,44 @@
+diff --git a/os.h b/os.h
+index 7cb1352..723a20a 100644
+--- a/os.h
++++ b/os.h
+@@ -260,9 +260,13 @@ extern int errno;
+ #endif
+ 
+ #if defined(UTMPOK) || defined(BUGGYGETLOGIN)
+-# if defined(SVR4) && !defined(DGUX) && !defined(__hpux) && !defined(linux)
++# if (defined(SVR4) && !defined(DGUX) && !defined(__hpux) && !defined(linux)) || defined(__FreeBSD__)
++#  ifdef UTMPX_FILE
++#   define UTMPFILE	UTMPX_FILE
++#  else
++#   define UTMPFILE	"/nonexistent"
++#  endif
+ #  include <utmpx.h>
+-#  define UTMPFILE	UTMPX_FILE
+ #  define utmp		utmpx
+ #  define getutent	getutxent
+ #  define getutid	getutxid
+@@ -271,6 +276,10 @@ extern int errno;
+ #  define setutent	setutxent
+ #  define endutent	endutxent
+ #  define ut_time	ut_xtime
++#  ifdef __FreeBSD__
++#   define ut_time	ut_tv.tv_sec
++#   define GETUTENT
++#  endif
+ # else /* SVR4 */
+ #  include <utmp.h>
+ # endif /* SVR4 */
+diff --git a/utmp.c b/utmp.c
+index 0632ae3..6681127 100644
+--- a/utmp.c
++++ b/utmp.c
+@@ -589,7 +589,7 @@ makedead(u)
+ struct utmp *u;
+ {
+   u->ut_type = DEAD_PROCESS;
+-#if !defined(linux) || defined(EMPTY)
++#if (!defined(__FreeBSD__) && (!defined(linux) || defined(EMPTY)))
+   u->ut_exit.e_termination = 0;
+   u->ut_exit.e_exit = 0;
+ #endif
