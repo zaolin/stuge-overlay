@@ -1,6 +1,7 @@
-# Copyright 2006 Peter Stuge
+# Copyright 2006-2012 Peter Stuge
 # Distributed under the terms of the GNU General Public License v2
-# $Header$
+
+EAPI="2"
 
 inherit eutils
 
@@ -12,9 +13,9 @@ RESTRICT="nomirror"
 LICENSE="stuge.se_proprietary"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="debug"
+IUSE=""
 
-RDEPEND=">=dev-db/mysql-3.0"
+RDEPEND="|| ( dev-db/mysql virtual/mysql )"
 DEPEND="${RDEPEND}
 	>=sys-apps/sed-3.0
 	"
