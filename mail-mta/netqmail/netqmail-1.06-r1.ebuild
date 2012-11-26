@@ -53,7 +53,7 @@ RDEPEND="
 	!mail-mta/ssmtp
 	>=sys-apps/ucspi-tcp-0.88-r17
 	ssl? ( >=sys-apps/ucspi-ssl-0.70-r1 )
-	virtual/daemontools
+	|| ( virtual/daemontools sys-process/daemontools )
 	>=net-mail/dot-forward-0.71-r3
 	virtual/checkpassword
 	authcram? ( >=net-mail/cmd5checkpw-0.30 )
