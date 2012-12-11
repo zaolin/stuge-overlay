@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-embedded/openocd/openocd-9999.ebuild,v 1.10 2010/03/07 04:44:21 vapier Exp $
 
-EGIT_REPO_URI="git://openocd.git.sourceforge.net/gitroot/openocd/openocd"
+EGIT_REPO_URI="http://openocd.zylin.com/p/openocd"
 inherit eutils
 if [[ ${PV} == "9999" ]] ; then
 	inherit git autotools
