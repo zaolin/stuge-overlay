@@ -9,6 +9,7 @@ DESCRIPTION="A linkable library for Git"
 HOMEPAGE="http://libgit2.github.com/"
 
 EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
+EGIT_BRANCH="development"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
