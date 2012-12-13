@@ -1,0 +1,40 @@
+diff -ru qcad-2.0.5.0-1-community.src.orig/qcadlib/src/engine/rs_entity.cpp qcad-2.0.5.0-1-community.src/qcadlib/src/engine/rs_entity.cpp
+--- qcad-2.0.5.0-1-community.src.orig/qcadlib/src/engine/rs_entity.cpp	2012-12-13 02:03:05.796555591 +0100
++++ qcad-2.0.5.0-1-community.src/qcadlib/src/engine/rs_entity.cpp	2012-12-13 02:06:15.756032552 +0100
+@@ -28,6 +28,7 @@
+ #include "rs_entity.h"
+ 
+ #include <iostream>
++#include <stdint.h>
+ 
+ #include "rs_arc.h"
+ #include "rs_circle.h"
+@@ -861,7 +862,7 @@
+         os << " layer: NULL ";
+     } else {
+         os << " layer: " << e.layer->getName().latin1() << " ";
+-        os << " layer address: " << (int)(e.layer) << " ";
++        os << " layer address: " << (intptr_t)(e.layer) << " ";
+     }
+ 
+     os << e.pen << "\n";
+diff -ru qcad-2.0.5.0-1-community.src.orig/qcadlib/src/engine/rs_layer.cpp qcad-2.0.5.0-1-community.src/qcadlib/src/engine/rs_layer.cpp
+--- qcad-2.0.5.0-1-community.src.orig/qcadlib/src/engine/rs_layer.cpp	2012-12-13 02:03:05.797555651 +0100
++++ qcad-2.0.5.0-1-community.src/qcadlib/src/engine/rs_layer.cpp	2012-12-13 02:06:23.780517392 +0100
+@@ -28,6 +28,7 @@
+ #include "rs_layer.h"
+ 
+ #include <iostream>
++#include <stdint.h>
+ 
+ #include "rs_color.h"
+ 
+@@ -55,7 +56,7 @@
+     os << " name: " << l.getName().latin1()
+     << " pen: " << l.getPen()
+ 	<< " frozen: " << (int)l.isFrozen()
+-	<< " address: " << (int)(&l)
++	<< " address: " << (intptr_t)(&l)
+     << std::endl;
+     return os;
+ }
