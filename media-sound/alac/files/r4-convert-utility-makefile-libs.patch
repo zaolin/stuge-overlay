@@ -1,0 +1,37 @@
+From 106e243b677a74dc2194062b7c13f52a488d8556 Mon Sep 17 00:00:00 2001
+From: Peter Stuge <peter@stuge.se>
+Date: Sat, 17 Aug 2013 01:54:12 +0200
+Subject: [PATCH] convert-utility/makefile: Move -L and -l flags into LIBS
+ variable
+
+Signed-off-by: Peter Stuge <peter@stuge.se>
+---
+ convert-utility/makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/convert-utility/makefile b/convert-utility/makefile
+index 28d98d7..68147af 100644
+--- a/convert-utility/makefile
++++ b/convert-utility/makefile
+@@ -1,7 +1,8 @@
+ # alacconvert make
+ 
+ CFLAGS = -g -O3 -c
+-LFLAGS = -Wall -L$(CODECDIR) -lalac
++LFLAGS = -Wall
++LIBS = -L$(CODECDIR) -lalac
+ CC = g++
+ 
+ SRCDIR = .
+@@ -30,7 +31,7 @@ CAFFileALAC.o
+ 
+ alacconvert:	$(OBJS)
+ 	(cd $(CODECDIR); $(MAKE))
+-	$(CC) $(LFLAGS) $(OBJS) -o alacconvert
++	$(CC) $(LFLAGS) $(OBJS) $(LIBS) -o alacconvert
+ 
+ main.o : main.cpp
+ 	$(CC) -I $(INCLUDES) $(CFLAGS) main.cpp
+-- 
+1.8.1.rc0.2.gfb4c622.dirty
+
