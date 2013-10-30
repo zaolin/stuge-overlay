@@ -1,9 +1,8 @@
-# Copyright 2009 Peter Stuge
-# $Header$
+# Copyright 2009-2013 Peter Stuge
 
-inherit eutils git
+EAPI="4"
 
-EAPI="2"
+inherit eutils git-2
 DESCRIPTION="A simple server for running CGI applications over FastCGI."
 HOMEPAGE="http://nginx.localdomain.pl/wiki/FcgiWrap"
 SRC_URI=""
