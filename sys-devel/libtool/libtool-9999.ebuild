@@ -1,10 +1,9 @@
-# Copyright 1999-2009 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
+# Copyright 2013 Peter Stuge
 # $Header: /var/cvsroot/gentoo-x86/sys-devel/libtool/libtool-9999.ebuild,v 1.4 2009/09/13 14:46:53 flameeyes Exp $
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="git://git.savannah.gnu.org/libtool.git"
-	inherit git
+	inherit git-2
 	SRC_URI=""
 else
 	SRC_URI="mirror://gnu/${PN}/${P}.tar.bz2"
