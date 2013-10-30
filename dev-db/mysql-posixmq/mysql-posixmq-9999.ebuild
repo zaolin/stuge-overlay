@@ -1,7 +1,9 @@
-# Copyright 2007 Peter Stuge
+# Copyright 2007-2013 Peter Stuge
 # $Header$
 
-inherit eutils git
+EAPI=4
+
+inherit eutils git-2
 
 DESCRIPTION="POSIX Message Queues MariaDB and MySQL UDF"
 HOMEPAGE="http://peter.stuge.se/mysql-posixmq-and-sha256"
