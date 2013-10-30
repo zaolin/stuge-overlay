@@ -1,7 +1,7 @@
-# Copyright 2009 Gentoo Foundation
+# Copyright 2013 Peter Stuge
 
-EAPI="1"
-inherit git
+EAPI="4"
+inherit git-2
 
 DESCRIPTION="Userspace access to USB devices"
 HOMEPAGE="http://libusb.sourceforge.net/"
