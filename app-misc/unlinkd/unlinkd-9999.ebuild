@@ -1,8 +1,9 @@
-# Copyright 2012 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
+# Copyright 2013 Peter Stuge
 # $Header$
 
-inherit eutils git
+EAPI=4
+
+inherit eutils git-2
 
 DESCRIPTION="A daemon to delete files on message queue commands"
 HOMEPAGE="http://git.stuge.se/?p=${PN}.git"
