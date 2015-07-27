@@ -1,4 +1,4 @@
-# Copyright 2007 Peter Stuge
+# Copyright 2007-2015 Peter Stuge
 # $Header$
 
 inherit eutils
