@@ -9,6 +9,7 @@ inherit git-r3
 DESCRIPTION="A libre cross platform disassembler"
 HOMEPAGE="https://www.panopticon.re"
 EGIT_REPO_URI="https://github.com/das-labor/panopticon.git"
+EGIT_COMMIT="refs/tags/0.11.0"
 SRC_URI=""
 KEYWORDS="~amd64 ~x86"
 LICENSE="GPL-3"
