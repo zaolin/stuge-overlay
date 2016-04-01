@@ -9,6 +9,7 @@ inherit git-r3
 DESCRIPTION="A libre cross platform disassembler"
 HOMEPAGE="https://www.panopticon.re"
 EGIT_REPO_URI="https://github.com/das-labor/panopticon.git"
+EGIT_COMMIT="refs/tags/0.14.0"
 SRC_URI=""
 KEYWORDS="~amd64 ~x86"
 LICENSE="GPL-3"
@@ -17,8 +18,11 @@ IUSE="debug test"
 
 RDEPEND="
 	sci-mathematics/glpk
-	dev-qt/qtgraphicaleffects:5
-	dev-qt/qtquickcontrols:5[widgets]"
+	( dev-qt/qtgui:5
+	  dev-qt/qtwidgets:5
+	  dev-qt/qtdeclarative:5
+	  dev-qt/qtquickcontrols:5[widgets] )
+	"
 DEPEND="${RDEPEND}
 	dev-lang/rust
 	dev-util/cargo
